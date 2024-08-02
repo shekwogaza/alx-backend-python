@@ -1,19 +1,17 @@
 #!/usr/bin/env python3
 """
-This module provides a function to calculate the floor of a float.
+This module provides a function to convert a float to its string representation.
 """
 
-import math
 
-
-def floor(n: float) -> int:
+def to_str(n: float) -> str:
     """
-    Calculate the floor of a given float.
+    Convert a float to its string representation.
 
     Args:
-        n (float): The number to calculate the floor of.
+        n (float): The float number to convert.
 
     Returns:
-        int: The floor of the input number.
+        str: The string representation of the input float.
     """
-    return math.floor(n)
+    return str(n)
