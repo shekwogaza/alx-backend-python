@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
-This module provides an asynchronous coroutine for collecting results from multiple tasks.
+This module provides an asynchronous coroutine for
+collecting results from multiple tasks.
 """
 
 import asyncio
