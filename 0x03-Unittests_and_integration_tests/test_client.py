@@ -9,8 +9,12 @@ import fixtures
 
 
 @parameterized_class([
-    {"org_payload": fixtures.org_payload, "repos_payload": fixtures.repos_payload,
-     "expected_repos": fixtures.expected_repos, "apache2_repos": fixtures.apache2_repos},
+    {
+        "org_payload": fixtures.org_payload,
+        "repos_payload": fixtures.repos_payload,
+        "expected_repos": fixtures.expected_repos,
+        "apache2_repos": fixtures.apache2_repos
+    },
 ])
 class TestIntegrationGithubOrgClient(unittest.TestCase):
     """Integration tests for GithubOrgClient class."""
@@ -34,7 +38,9 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
             Returns:
                 _type_: _description_
             """
-            if url == f"https://api.github.com/orgs/{cls.org_payload['login']}":
+            if url == f"https://api.github.com/orgs/" \
+                    f"{cls.org_payload['login']}":
+
                 return cls.org_payload
             elif url == cls.org_payload["repos_url"]:
                 return cls.repos_payload
@@ -48,13 +54,15 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
         cls.get_patcher.stop()
 
     def test_public_repos(self):
-        """Test the public_repos method returns the correct list of repos."""
+        """Test the public_repos method
+        returns the correct list of repos."""
         client = GithubOrgClient(self.org_payload['login'])
         result = client.public_repos()
         self.assertEqual(result, self.expected_repos)
 
     def test_public_repos_with_license(self):
-        """Test the public_repos method filters repos by license when provided."""
+        """Test the public_repos method
+        filters repos by license when provided."""
         client = GithubOrgClient(self.org_payload['login'])
         result = client.public_repos(license_key="apache-2.0")
         self.assertEqual(result, self.apache2_repos)
