@@ -7,7 +7,11 @@ from utils import access_nested_map
 
 
 class TestAccessNestedMap(unittest.TestCase):
-    """Tests for access_nested_map function."""
+    """_summary_
+
+    Args:
+        unittest (_type_): _description_
+    """
 
     @parameterized.expand([
         ({"a": 1}, ("a",), 1),
@@ -15,7 +19,13 @@ class TestAccessNestedMap(unittest.TestCase):
         ({"a": {"b": 2}}, ("a", "b"), 2),
     ])
     def test_access_nested_map(self, nested_map, path, expected):
-        """Test that access_nested_map returns correct results."""
+        """_summary_
+
+        Args:
+            nested_map (_type_): _description_
+            path (_type_): _description_
+            expected (_type_): _description_
+        """
         self.assertEqual(access_nested_map(nested_map, path), expected)
 
     @parameterized.expand([
@@ -23,7 +33,13 @@ class TestAccessNestedMap(unittest.TestCase):
         ({"a": 1}, ("a", "b"), "b"),
     ])
     def test_access_nested_map_exception(self, nested_map, path, expected_error):
-        """Test that access_nested_map raises KeyError with correct message."""
+        """_summary_
+
+        Args:
+            nested_map (_type_): _description_
+            path (_type_): _description_
+            expected_error (_type_): _description_
+        """
         with self.assertRaises(KeyError) as context:
             access_nested_map(nested_map, path)
 
