@@ -8,11 +8,7 @@ from client import GithubOrgClient
 
 
 class TestGithubOrgClient(unittest.TestCase):
-    """_summary_
-
-    Args:
-        unittest (_type_): _description_
-    """
+    """Tests for GithubOrgClient class."""
 
     @parameterized.expand([
         ("google",),
@@ -30,6 +26,19 @@ class TestGithubOrgClient(unittest.TestCase):
         client.org()
         mock_get_json.assert_called_once_with(
             f"https://api.github.com/orgs/{org_name}")
+
+    def test_public_repos_url(self):
+        """_summary_
+        """
+        expected_payload = {
+            "repos_url": "https://api.github.com/orgs/testorg/repos"
+        }
+
+        with patch.object(GithubOrgClient, 'org', new_callable=property) as mock_org:
+            mock_org.return_value = expected_payload
+            client = GithubOrgClient("testorg")
+            result = client._public_repos_url
+            self.assertEqual(result, expected_payload["repos_url"])
 
 
 if __name__ == '__main__':
