@@ -16,14 +16,20 @@ class TestGithubOrgClient(unittest.TestCase):
     ])
     @patch('client.get_json')
     def test_org(self, org_name, mock_get_json):
-        """Test that GithubOrgClient.org returns the correct value."""
+        """_summary_
+
+        Args:
+            org_name (_type_): _description_
+            mock_get_json (_type_): _description_
+        """
         client = GithubOrgClient(org_name)
         client.org()
         mock_get_json.assert_called_once_with(
             f"https://api.github.com/orgs/{org_name}")
 
     def test_public_repos_url(self):
-        """Unit-test GithubOrgClient._public_repos_url method."""
+        """_summary_
+        """
         expected_payload = {
             "repos_url": "https://api.github.com/orgs/testorg/repos"
         }
@@ -36,7 +42,11 @@ class TestGithubOrgClient(unittest.TestCase):
 
     @patch('client.get_json')
     def test_public_repos(self, mock_get_json):
-        """Unit-test GithubOrgClient.public_repos method."""
+        """_summary_
+
+        Args:
+            mock_get_json (_type_): _description_
+        """
         test_payload = [
             {"name": "repo1"},
             {"name": "repo2"},
@@ -48,15 +58,26 @@ class TestGithubOrgClient(unittest.TestCase):
             client = GithubOrgClient("test-org")
             repos = client.public_repos()
 
-            # Test that the list of repos is correct
             self.assertEqual(repos, ["repo1", "repo2"])
-
-            # Test that the mocked property was called once
             mock_public_repos_url.assert_called_once()
-
-            # Test that the mocked get_json was called once with the correct argument
             mock_get_json.assert_called_once_with(
                 "https://api.github.com/orgs/test-org/repos")
+
+    @parameterized.expand([
+        ({"license": {"key": "my_license"}}, "my_license", True),
+        ({"license": {"key": "other_license"}}, "my_license", False),
+    ])
+    def test_has_license(self, repo, license_key, expected):
+        """_summary_
+
+        Args:
+            repo (_type_): _description_
+            license_key (_type_): _description_
+            expected (_type_): _description_
+        """
+        client = GithubOrgClient("test-org")
+        result = client.has_license(repo, license_key)
+        self.assertEqual(result, expected)
 
 
 if __name__ == '__main__':
