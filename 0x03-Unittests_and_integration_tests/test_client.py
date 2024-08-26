@@ -17,7 +17,11 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        """Set up the test environment before running the tests."""
+        """_summary_
+
+        Returns:
+            _type_: _description_
+        """
         cls.get_patcher = patch('requests.get')
         cls.mock_get = cls.get_patcher.start()
 
@@ -46,13 +50,14 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
     def test_public_repos(self):
         """Test the public_repos method returns the correct list of repos."""
         client = GithubOrgClient(self.org_payload['login'])
-        self.assertEqual(client.public_repos(), self.expected_repos)
+        result = client.public_repos()
+        self.assertEqual(result, self.expected_repos)
 
     def test_public_repos_with_license(self):
         """Test the public_repos method filters repos by license when provided."""
         client = GithubOrgClient(self.org_payload['login'])
-        self.assertEqual(client.public_repos(
-            license_key="apache-2.0"), self.apache2_repos)
+        result = client.public_repos(license_key="apache-2.0")
+        self.assertEqual(result, self.apache2_repos)
 
 
 if __name__ == '__main__':
